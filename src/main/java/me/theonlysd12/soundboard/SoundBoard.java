@@ -12,14 +12,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class SoundBoard implements ModInitializer {
-    public static final Identifier SUI = new Identifier("soundboard:sui");
-    public static SoundEvent SUI_EVENT = SoundEvent.of(SUI);
-    public static final Identifier AMONG = new Identifier("soundboard:among");
-    public static SoundEvent AMONG_EVENT = SoundEvent.of(AMONG);
-    public static final Identifier WOW = new Identifier("soundboard:wow");
-    public static SoundEvent WOW_EVENT = SoundEvent.of(WOW);
-    public static final Identifier SMG = new Identifier("soundboard:smg");
-    public static SoundEvent SMG_EVENT = SoundEvent.of(SMG);
+    public static final Identifier SOUND1 = new Identifier("soundboard:sound1");
+    public static SoundEvent SOUND1_EVENT = SoundEvent.of(SOUND1);
+    public static final Identifier SOUND2 = new Identifier("soundboard:sound2");
+    public static SoundEvent SOUND2_EVENT = SoundEvent.of(SOUND2);
+    public static final Identifier SOUND3 = new Identifier("soundboard:sound3");
+    public static SoundEvent SOUND3_EVENT = SoundEvent.of(SOUND3);
+    public static final Identifier SOUND4 = new Identifier("soundboard:sound4");
+    public static SoundEvent SOUND4_EVENT = SoundEvent.of(SOUND4);
     public static final Identifier CUSTOM1 = new Identifier("soundboard:custom1");
     public static SoundEvent CUSTOM1_EVENT = SoundEvent.of(CUSTOM1);
     public static final Identifier CUSTOM2 = new Identifier("soundboard:custom2");
@@ -37,15 +37,15 @@ public class SoundBoard implements ModInitializer {
     public static final Identifier CUSTOM8 = new Identifier("soundboard:custom8");
     public static SoundEvent CUSTOM8_EVENT = SoundEvent.of(CUSTOM8);
     public static final Logger LOGGER = LoggerFactory.getLogger("SoundBoard");
-    public static final Identifier SOUNDBOARD_ID = new Identifier("soundboard", "soundboard");
+    public static final Identifier SOUNDBOARD_PACKET_ID = new Identifier("soundboard", "play_sound");
 
     @Override
     public void onInitialize() {
         LOGGER.info("Initializing SoundBoard");
-        Registry.register(Registries.SOUND_EVENT, SUI, SUI_EVENT);
-        Registry.register(Registries.SOUND_EVENT, AMONG, AMONG_EVENT);
-        Registry.register(Registries.SOUND_EVENT, WOW, WOW_EVENT);
-        Registry.register(Registries.SOUND_EVENT, SMG, SMG_EVENT);
+        Registry.register(Registries.SOUND_EVENT, SOUND1, SOUND1_EVENT);
+        Registry.register(Registries.SOUND_EVENT, SOUND2, SOUND2_EVENT);
+        Registry.register(Registries.SOUND_EVENT, SOUND3, SOUND3_EVENT);
+        Registry.register(Registries.SOUND_EVENT, SOUND4, SOUND4_EVENT);
         Registry.register(Registries.SOUND_EVENT, CUSTOM1, CUSTOM1_EVENT);
         Registry.register(Registries.SOUND_EVENT, CUSTOM2, CUSTOM2_EVENT);
         Registry.register(Registries.SOUND_EVENT, CUSTOM3, CUSTOM3_EVENT);
@@ -54,11 +54,12 @@ public class SoundBoard implements ModInitializer {
         Registry.register(Registries.SOUND_EVENT, CUSTOM6, CUSTOM6_EVENT);
         Registry.register(Registries.SOUND_EVENT, CUSTOM7, CUSTOM7_EVENT);
         Registry.register(Registries.SOUND_EVENT, CUSTOM8, CUSTOM8_EVENT);
-        ServerPlayNetworking.registerGlobalReceiver(SOUNDBOARD_ID, (server, player, handler, buf, responseSender) -> {
+        ServerPlayNetworking.registerGlobalReceiver(SOUNDBOARD_PACKET_ID, (server, player, handler, buf, responseSender) -> {
             Identifier soundId = buf.readIdentifier();
             SoundEvent soundEvent = Registries.SOUND_EVENT.get(soundId);
             World world = player.getServerWorld();
-            world.playSound(player, player.getX(), player.getY(), player.getZ(), soundEvent, SoundCategory.BLOCKS, 1f, 1f);
+            world.playSound(player, player.getX(), player.getY(), player.getZ(), soundEvent, SoundCategory.MUSIC, 1f, 1f);
+            world.playSound(player, player.getX(), player.getY(), player.getZ(), soundEvent, SoundCategory.MUSIC, 1f, 1f);
         });
     }
 }
