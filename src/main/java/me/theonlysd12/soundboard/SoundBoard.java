@@ -7,7 +7,6 @@ import net.minecraft.registry.Registry;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.Identifier;
-import net.minecraft.world.World;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -57,9 +56,7 @@ public class SoundBoard implements ModInitializer {
         ServerPlayNetworking.registerGlobalReceiver(SOUNDBOARD_PACKET_ID, (server, player, handler, buf, responseSender) -> {
             Identifier soundId = buf.readIdentifier();
             SoundEvent soundEvent = Registries.SOUND_EVENT.get(soundId);
-            World world = player.getServerWorld();
-            world.playSound(player, player.getX(), player.getY(), player.getZ(), soundEvent, SoundCategory.MUSIC, 1f, 1f);
-            world.playSound(player, player.getX(), player.getY(), player.getZ(), soundEvent, SoundCategory.MUSIC, 1f, 1f);
+            player.getServerWorld().playSound(null, player.getBlockPos(), soundEvent, SoundCategory.RECORDS, 1f, 1f);
         });
     }
 }
